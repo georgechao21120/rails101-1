@@ -8,7 +8,8 @@ before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
 
     def show
         @group = Group.find(params[:id])
-        @posts = @group.posts.recent
+        @posts = @group.posts.recent.paginate(:page => params[:page], :per_page => 5)
+    end
 
     def edit
     end
@@ -57,5 +58,4 @@ before_action :find_group_and_check_permission, only: [:edit, :update, :destroy]
   def group_params
     params.require(:group).permit(:title, :description)
   end
-
-end
+  end
